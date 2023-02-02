@@ -1,0 +1,57 @@
+--these can be minified further, they have variable names that they don't need.
+
+--DELTA
+--DELTA unminified
+function delta(var,spot)
+  if not deltaTable then
+    deltaTable = {}
+    deltaTable[spot] = {oldVar = 0,deltaVar = 0}
+  elseif not deltaTable[spot] then
+    deltaTable[spot] = {oldVar = 0,deltaVar = 0}
+  end
+    deltaTable[spot].deltaVar = var - deltaTable[spot].oldVar
+    deltaTable[spot].oldVar = var
+
+  return deltaTable[spot].deltaVar
+end
+
+--DELTA minified
+function delta(var,name)if not a then a={}a[name]={oldVar=0,deltaVar=0}elseif not a[name]then a[name]={oldVar=0,deltaVar=0}end;a[name].deltaVar=var-a[name].oldVar;a[name].oldVar=var;return a[name].deltaVar end
+
+--DELTA example (for Pony IDE) sidenote uhh its doing something weird with float imprecision.. dunno what thats about.
+ign = input.getNumber
+function onTick()
+	print(delta(ign(1),"one"))
+	print(delta(ign(2),"two"))
+end
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
+
+--PULSE
+--PULSE unminified
+function pulse(var,spot)
+  if not pulseTable then
+    pulseTable = {}
+    pulseTable[spot] = {pulse = false,touch = false}
+  elseif not pulseTable[spot] then
+    pulseTable[spot] = {pulse = false,touch = false}
+  end
+  pulseTable[spot].pulse = var ~= pulseTable[spot].touch and var
+  pulseTable[spot].touch = var
+  return pulseTable[spot].pulse
+end
+
+--PULSE minified
+function pulse(var,name)if not a then a={}a[name]={pulse=false,touch=false}elseif not a[name]then a[name]={pulse=false,touch=false}end;a[name].pulse=var~=a[name].touch and var;a[name].touch=var;return a[name].pulse end
+
+--PULSE example (for Pony IDE)
+ign = input.getBool
+function onTick()
+    if pulse(ign(1),"one") then
+        print("pulse 1")
+    end
+    if pulse(ign(2),"two") then
+        print("pulse 2")
+    end
+end
+
