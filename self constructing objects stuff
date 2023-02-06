@@ -55,3 +55,29 @@ function onTick()
     end
 end
 
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
+
+--PID
+--PID unminified
+function pid(setpoint,processVar,tunes,spot)
+    if not pidTable then
+        pidTable = {}
+        pidTable[spot] = {error=0,integral=0,derivative=0,errorPrior=0,integralPrior=0}
+    elseif not pidTable[spot] then
+        pidTable[spot] = {error=0,integral=0,derivative=0,errorPrior=0,integralPrior=0}
+    end
+    pidTable[spot].error = setpoint - processVar
+    pidTable[spot].integral = pidTable[spot].integralPrior + pidTable[spot].error
+    pidTable[spot].derivative = pidTable[spot].error - pidTable[spot].errorPrior
+    
+    pidTable[spot].controlOutput = tunes.p * pidTable[spot].error + tunes.i * pidTable[spot].integral + tunes.d * pidTable[spot].derivative
+    
+    pidTable[spot].errorPrior = pidTable[spot].error
+    pidTable[spot].integralPrior = pidTable[spot].integral
+    
+    return pidTable[spot].controlOutput
+end
+
+--PID minified
+
+--PID example (for Pony IDE)
