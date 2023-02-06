@@ -81,3 +81,85 @@ end
 --PID minified
 
 --PID example (for Pony IDE)
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
+
+--BEEPER
+--BEEPER unminified
+function beep(bool,ticks,spot)
+	if not beepTable then
+		beepTable = {}
+		beepTable[spot] = {i=0}
+	elseif not beepTable[spot] then
+		beepTable[spot] = {i=0}
+	end
+	if (beepTable[spot].i > ticks) then
+		beepTable[spot].i = 0
+		return true
+	else
+		beepTable[spot].i = beepTable[spot].i + 1
+		return false
+	end
+end
+
+--BEEPER minified
+
+
+--BEEPER example (for Pony IDE)
+ign,pgn = input.getNumber,property.getNumber
+function onTick()
+	if beep(true,30,"one") then
+		print("beep 1")
+	end
+	if beep(true,40,"two") then
+		print("beep 2")
+	end
+end
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
+
+--DELAY
+--DELAY unminified
+function delay(bool,ticks,spot)
+	if not delayTable then
+		delayTable = {}
+		delayTable[spot] = {i=0}
+	elseif not delayTable[spot] then
+		delayTable[spot] = {i=0}
+	end
+	if bool then
+		if (delayTable[spot].i > ticks) then
+			return true
+		else
+			delayTable[spot].i = delayTable[spot].i + 1
+			return false
+		end
+	else
+		delayTable[spot].i = 0
+	end
+end
+
+--DELAY minified
+
+
+--DELAY example (for Pony IDE)
+ign,pgn = input.getNumber,property.getNumber
+function onTick()
+	if delay(true,30,"runar") then
+		print("delay 1 done")
+	end
+	if delay(true,40,"anne") then
+		print("delay 2 done")
+	end
+end
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
+
+--
+-- unminified
+
+
+-- minified
+
+
+-- example (for Pony IDE)
