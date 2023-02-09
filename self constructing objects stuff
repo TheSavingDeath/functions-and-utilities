@@ -93,11 +93,16 @@ function beep(bool,ticks,spot)
 	elseif not beepTable[spot] then
 		beepTable[spot] = {i=0}
 	end
-	if (beepTable[spot].i > ticks) then
-		beepTable[spot].i = 0
-		return true
+	if bool then
+		if beepTable[spot].i > ticks then
+			beepTable[spot].i = 0
+			return true
+		else
+			beepTable[spot].i = beepTable[spot].i + 1
+			return false
+		end
 	else
-		beepTable[spot].i = beepTable[spot].i + 1
+		beepTable[spot].i = 0
 		return false
 	end
 end
