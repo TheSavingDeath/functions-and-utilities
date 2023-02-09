@@ -160,29 +160,24 @@ end
 function capacitor(bool,chargeTicks,dischargeTicks,spot)
 	if not delayTable then
 		delayTable = {}
-		delayTable[spot] = {i=0,wasBeenTrue=false}
+		delayTable[spot] = {i1=0,i2=0}
 	elseif not delayTable[spot] then
-		delayTable[spot] = {i=0,wasBeenTrue=false}
+		delayTable[spot] = {i1=0,i2=0}
 	end
 	if bool then
-		if (delayTable[spot].i >= chargeTicks) then
-			wasBeenTrue = true
+		if delayTable[spot].i1 >= chargeTicks then
+			delayTable[spot].i2 = dischargeTicks
 			return true
 		else
-			delayTable[spot].i = delayTable[spot].i + 1
-			wasBeenTrue = false
+			delayTable[spot].i1 = delayTable[spot].i1 + 1
 			return false
 		end
 	else
-		if (delayTable[spot].i > 0) then
-			delayTable[spot].i = delayTable[spot].i - 1
-			if wasBeenTrue then
-				return true
-			else
-				return false
-			end
-		else
+		if delayTable[spot].i2 == 0 then
 			return false
+		else
+			delayTable[spot].i2 = delayTable[spot].i2 - 1
+			return true
 		end
 	end
 end
@@ -193,11 +188,11 @@ end
 --CAPACITOR example (for Pony IDE)
 igb,pgn = input.getBool,property.getNumber
 function onTick()
-	if capacitor(igb(1),50,50,"runar") then
-		print("delay 1 true")
+	if capacitor(igb(1),0,3,"runar") then
+		print("1 true")
 	end
-	if capacitor(igb(2),20,20,"anne") then
-		print("delay 2 true")
+	if capacitor(igb(2),0,4,"anne") then
+		print("2 true")
 	end
 end
 
