@@ -155,6 +155,54 @@ end
 
 --~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
 
+--CAPACITOR
+--CAPACITOR unminified
+function capacitor(bool,chargeTicks,dischargeTicks,spot)
+	if not delayTable then
+		delayTable = {}
+		delayTable[spot] = {i=0,wasBeenTrue=false}
+	elseif not delayTable[spot] then
+		delayTable[spot] = {i=0,wasBeenTrue=false}
+	end
+	if bool then
+		if (delayTable[spot].i >= chargeTicks) then
+			wasBeenTrue = true
+			return true
+		else
+			delayTable[spot].i = delayTable[spot].i + 1
+			wasBeenTrue = false
+			return false
+		end
+	else
+		if (delayTable[spot].i > 0) then
+			delayTable[spot].i = delayTable[spot].i - 1
+			if wasBeenTrue then
+				return true
+			else
+				return false
+			end
+		else
+			return false
+		end
+	end
+end
+
+--CAPACITOR minified
+
+
+--CAPACITOR example (for Pony IDE)
+igb,pgn = input.getBool,property.getNumber
+function onTick()
+	if capacitor(igb(1),50,50,"runar") then
+		print("delay 1 true")
+	end
+	if capacitor(igb(2),20,20,"anne") then
+		print("delay 2 true")
+	end
+end
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
+
 --
 -- unminified
 
