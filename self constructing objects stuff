@@ -203,6 +203,44 @@ end
 
 --~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
 
+--ADVANCED DELTA
+--ADVANCED DELTA unminified
+function deltaAdv(c,b,n)
+	if not a then
+		a={} a[b]={}
+		a[b].deltaVar=0
+		a[b].last={}
+		for i=1,100 do
+			a[b].last[i]=0
+		end
+	elseif not a[b] then
+		a[b]={}
+		a[b].deltaVar=0
+		a[b].last={}
+		for i=1,100 do
+			a[b].last[i]=0
+		end
+	end
+	a[b].deltaVar=(c-a[b].last[n])/n
+	for i=100,2,-1 do
+		a[b].last[i]=a[b].last[i-1]
+	end
+	a[b].last[1]=c
+	return a[b].deltaVar
+end
+
+--ADVANCED DELTA minified
+function deltaAdv(c,b,n)if not a then a={} a[b]={} a[b].deltaVar=0 a[b].last={} for i=1,100 do a[b].last[i]=0 end elseif not a[b] then a[b]={} a[b].deltaVar=0 a[b].last={} for i=1,100 do a[b].last[i]=0 end end a[b].deltaVar=(c-a[b].last[n])/n for i=100,2,-1 do a[b].last[i]=a[b].last[i-1] end a[b].last[1]=c return a[b].deltaVar end
+
+--example (for Pony IDE)
+howManyTicksBackInTime = 5
+x = x + 1
+print(deltaAdv(x, "customKey", howManyTicksBackInTime)) --prints: 1
+y = y + 0.69
+print(deltaAdv(y, "customKey2", howManyTicksBackInTime)) --prints: 0.69
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Next
+
 --
 -- unminified
 
